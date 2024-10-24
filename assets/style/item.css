@@ -1,0 +1,85 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f7f7f7, #e0e0e0);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+    font-size: 16px;
+    padding: 10px 15px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #0d6efd;
+}
+
+#item-form .form-control {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.sec-bt button {
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.sec-bt button:hover {
+    transform: translateY(-2px);
+}
+
+.item-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.item-table th, .item-table td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.item-table th {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.item-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.topic {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.container {
+    padding: 8px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.item {
+    padding: 0 20px;
+}
+
+.btn-f {
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.btn-f:hover {
+    color: #fff;
+}

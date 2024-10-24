@@ -1,0 +1,42 @@
+.card-style{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+}
+
+.text1 {
+    text-decoration: none;
+    color: #3FA6CC;
+    font-weight: bold;
+}
+
+.text2 {
+    text-decoration: none;
+    color: #081C7C;
+    font-weight: bold;
+}
+
+.text3 {
+    text-decoration: none;
+    color: #370752;
+    font-weight: bold;
+}
+
+.text1:hover, .text2:hover, .text3:hover {
+    color: #65ecf8;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #f7f7f7, #e0e0e0);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item{
+    padding: 10px;
+    color: white;
+}
+
+.card{
+    width: 300px;
+}
