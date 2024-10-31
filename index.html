@@ -40,6 +40,9 @@
                     <li class="nav-item">
                         <span id="order-nav">Order</span>
                     </li>
+                    <li class="nav-item">
+                        <span id="orderDetail-nav">OrderDetail</span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -53,21 +56,21 @@
         <div class="card text-center mb-3 card-style">
             <div class="card-body">
                 <img class="img" src="assets/image/icons8-customerjj-96%20(1).png"><br>
-                <div class="text1">Customer <span>0</span></div>
+                <div class="text1" id="customerCount">Customer <span>0</span></div>
             </div>
         </div>
 
         <div class="card text-center mb-3 card-style" >
             <div class="card-body">
                 <img class="img" src="assets/image/icons8-batch-96.png"><br>
-                <div class="text2">Item <span>0</span></div>
+                <div class="text2" id="itemCount">Item <span>0</span></div>
             </div>
         </div>
 
         <div class="card text-center mb-3 card-style">
             <div class="card-body">
                 <img class="img" src="assets/image/icons8-order-96.png"><br>
-                <div class="text3">Order <span>0</span></div>
+                <div class="text3" id="orderCount">Order <span>0</span></div>
             </div>
         </div>
     </div>
@@ -83,8 +86,9 @@
                 <input type="text" class="form-control" id="search" placeholder="Search">
             </div>
             <div class="col-auto col col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 col-xxl-3">
-                <button type="submit" class="btn btn-success">search</button>
+                <button id="search_button" type="button" class="btn btn-success">search</button>
             </div>
+            <div id="results"></div>
         </form>
     </div>
 
@@ -111,42 +115,8 @@
                             <th scope="col">Tel</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                        <tbody id="customerTableBody">
 
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td colspan="2">Larry the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -190,10 +160,9 @@
                         </div>
 
                         <section class="sec-bt mt-10 ">
-                            <button type="button" class="btn btn-outline-info btn-f">View</button>
-                            <button type="button" class="btn btn-outline-danger btn-f">Delete</button>
-                            <button type="button" class="btn btn-outline-warning btn-f">Update</button>
-                            <button type="button" class="btn btn-outline-success btn-f">Save</button>
+                            <button id="customer_delete_btn" type="button" class="btn btn-outline-danger btn-f">Delete</button>
+                            <button id="customer_update_btn" type="button" class="btn btn-outline-warning btn-f">Update</button>
+                            <button id="customer_add_btn" type="button" class="btn btn-outline-success btn-f">Save</button>
                         </section>
                     </form>
 
@@ -212,8 +181,9 @@
                 <input type="text" class="form-control" id="searchId" placeholder="Search">
             </div>
             <div class="col-auto col col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-3 col-xxl-3">
-                <button type="submit" class="btn btn-success">search</button>
+                <button id="search_button2" type="button" class="btn btn-success">search</button>
             </div>
+            <div id="results-it"></div>
         </form>
     </div>
 
@@ -234,42 +204,8 @@
                         <th scope="col">Unit Price</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
+                    <tbody id="itemTableBody">
 
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
                     </tbody>
                 </table>
 
@@ -308,10 +244,9 @@
                             </div>
                         </div>
                         <section class="sec-bt mt-10 ">
-                            <button type="button" class="btn btn-outline-info btn-f">View</button>
-                            <button type="button" class="btn btn-outline-danger btn-f">Delete</button>
-                            <button type="button" class="btn btn-outline-warning btn-f">Update</button>
-                            <button type="button" class="btn btn-outline-success btn-f">Save</button>
+                            <button id="item_delete_btn"type="button" class="btn btn-outline-danger btn-f">Delete</button>
+                            <button id="item_update_btn" type="button" class="btn btn-outline-warning btn-f">Update</button>
+                            <button id="item_save_btn" type="button" class="btn btn-outline-success btn-f">Save</button>
                         </section>
                     </form>
                 </div>
@@ -333,6 +268,10 @@
             <div class="details-order2">
                 <form id="customer-form1">
                     <div class="mb-3">
+                        <label for="cust_tel" class="form-label">Tel</label>
+                        <input type="text" class="form-control" id="cust_tel" placeholder="Tel">
+                    </div>
+                    <div class="mb-3">
                         <label for="cust_id" class="form-label">Cus_ID</label>
                         <input type="text" class="form-control" id="cust_id" placeholder="Cus_ID">
                     </div>
@@ -340,11 +279,8 @@
                         <label for="cust_name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="cust_name" placeholder="Name">
                     </div>
-                    <div class="mb-3">
-                        <label for="cust_tel" class="form-label">Tel</label>
-                        <input type="text" class="form-control" id="cust_tel" placeholder="Tel">
-                    </div>
                 </form>
+                <div id="searchMessage" style="color:Green;"></div>
             </div>
         </div>
 
@@ -392,19 +328,19 @@
                 <form id="order-form">
                     <div class="mb-3">
                         <label for="order_id" class="form-label">Order_ID</label>
-                        <input type="text" class="form-control" id="order_id" placeholder="Order_ID">
+                        <input type="text" class="form-control" id="order_id" placeholder="Order_ID" readonly> <!-- Set as read-only -->
                     </div>
                     <div class="mb-3">
                         <label for="date" class="form-label">Date</label>
-                        <input type="text" class="form-control" id="date" placeholder="Date">
+                        <input type="text" class="form-control" id="date" placeholder="Date" readonly> <!-- Set as read-only -->
                     </div>
                     <div class="mb-3">
                         <label for="ord_qty" class="form-label">Qty</label>
                         <input type="text" class="form-control" id="ord_qty" placeholder="Qty">
                     </div>
                     <section class="sec-bt mt-10 ">
-                        <button type="button" class="btn btn-outline-success btn-f">Add to Cart</button>
-                        <button type="button" class="btn btn-outline-danger btn-f">Cancel</button>
+                        <button id="addToCart-btn" type="button" class="btn btn-outline-success btn-f">Add to Cart</button>
+                        <button id="cancel-btn" type="button" class="btn btn-outline-danger btn-f">Cancel</button>
                     </section>
                 </form>
             </div>
@@ -434,8 +370,8 @@
                         <input type="text" id="balance" class="form-control form-final" placeholder="Balance">
                     </div>
                     <section class="sec-bt mt-10 ">
-                        <button type="button" class="btn btn-outline-warning btn-f">Place Order</button>
-                        <button type="button" class="btn btn-outline-info btn-f">View</button>
+                        <button id="placeOrder-btn" type="button" class="btn btn-outline-warning btn-f">Place Order</button>
+                        <button id="view-btn" type="button" class="btn btn-outline-info btn-f">View</button>
                     </section>
                 </form>
             </div>
@@ -457,78 +393,11 @@
                         <th scope="col">Qty</th>
                         <th scope="col">Price</th>
                         <th scope="col">Total</th>
+                        <th scope="col">Remove</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>@fat</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
+                    <tbody id="orderTableBody">
 
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>@fat</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>@fat</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                        <td>@twitter</td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -536,8 +405,51 @@
     </div>
 </div>
 
-<script src="jScript.js"></script>
+
+<section id="orderDetail-section">
+    <div class="container mt-5">
+
+
+        <div class="row">
+            <div class="col col-xs-12 col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
+                <div class="container mt-0" >
+                    <div class="right-align">
+                        <h3 class="topic">Order Details</h3>
+                    </div>
+                </div>
+
+
+
+                <div style="overflow-y: scroll">
+                    <table class="table table-striped custom-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Ord_ID</th>
+                            <th scope="col">Cus_ID</th>
+                            <th scope="col">Item_ID</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                        </thead>
+                        <tbody id="orderDetailTableBody">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
 <script src="assets/lib/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="module" src="controller/CustomerController.js"></script>
+<script type="module" src="controller/ItemController.js"></script>
+<script type="module" src="controller/OrderController.js"></script>
+<script type="module" src="controller/HomeController.js"></script>
+<script type="module" src="jScript.js"></script>
 <script src="assets/fontawesome/js/all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
