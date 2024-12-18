@@ -3,6 +3,46 @@ import Order from "../models/Order.js";
 import CustomerModels from "../models/CustomerModel.js";
 import ItemModel from "../models/ItemModel.js";
 
+const phoneRegex = /^[0-9]{10}$/;
+const itemIdRegex = /^[A-Za-z0-9]{4,10}$/;
+const quantityRegex = /^[1-9]\d*$/;
+const amountRegex = /^\d+(\.\d{1,2})?$/;
+
+
+const validatePhoneNumber = (phoneNumber) => {
+    if (!phoneNumber || !phoneRegex.test(phoneNumber)) {
+        alert("Invalid phone number. Please enter a valid 10-digit phone number.");
+        return false;
+    }
+    return true;
+};
+
+
+const validateItemId = (itemId) => {
+    if (!itemId || !itemIdRegex.test(itemId)) {
+        alert("Invalid item ID. Item ID should be alphanumeric and 5-10 characters long.");
+        return false;
+    }
+    return true;
+};
+
+
+const validateQuantity = (quantity) => {
+    if (!quantity || !quantityRegex.test(quantity)) {
+        alert("Invalid quantity. Quantity must be a positive integer.");
+        return false;
+    }
+    return true;
+};
+
+
+const validateAmount = (amount) => {
+    if (!amount || !amountRegex.test(amount)) {
+        alert("Invalid amount. Please enter a valid payment amount.");
+        return false;
+    }
+    return true;
+};
 
 const loadCustomersFromLocalStorage = () => {
     const savedCustomers = JSON.parse(localStorage.getItem("customers")) || [];
@@ -17,8 +57,7 @@ const loadItemsFromLocalStorage = () => {
 
 
 const searchCustomer = (cusTel) => {
-    if (!cusTel) {
-        alert("Please enter a telephone number.");
+    if (!validatePhoneNumber(cusTel)) {
         return;
     }
     console.log(`Searching for customer with telephone: ${cusTel}`);
@@ -81,6 +120,10 @@ const addToCart = () => {
     const itemId = $("#itm_id").val();
     const cusId = $("#cust_id").val();
 
+    if (!validateItemId(itemId) || !validateQuantity(qty)) {
+        return;
+    }
+
     if (!currentOrderId || !qty || !cusId) {
         alert("Please complete all fields.");
         return;
@@ -118,14 +161,14 @@ const addToCart = () => {
     renderCart();
 };
 
-// Save cart to local storage
+// cart eka local storage ekata danawa
 const saveCartToLocalStorage = () => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     localStorage.setItem("totalAmount", totalAmount.toFixed(2));
 };
 
 
-// Render cart in the table
+// data tika set karanawa cart table ekata
 const renderCart = () => {
     $("#orderTableBody").empty();
     for (const [itemKey, item] of Object.entries(cartItems)) {
@@ -146,7 +189,7 @@ const renderCart = () => {
     $("#total").val(totalAmount.toFixed(2));
 };
 
-// Load cart from local storage
+// local storage eken load karagannawa
 const loadCartFromLocalStorage = () => {
     const savedCartItems = JSON.parse(localStorage.getItem("cartItems")) || {};
     totalAmount = parseFloat(localStorage.getItem("totalAmount")) || 0;
@@ -155,7 +198,7 @@ const loadCartFromLocalStorage = () => {
     $("#total").val(totalAmount.toFixed(2));
 };
 
-// Remove item from cart
+// item cart eken remove karagannawa
 const removeFromCart = (itemKey) => {
     if (cartItems[itemKey]) {
         totalAmount -= cartItems[itemKey].totalPrice;
@@ -165,24 +208,24 @@ const removeFromCart = (itemKey) => {
     }
 };
 
-// Event delegation for dynamic elements
+
 $(document).on("click", ".remove-row-btn", function () {
     const row = $(this).closest("tr");
     const itemKey = row.data("item-id");
     removeFromCart(itemKey);
 });
 
-// Calculate balance based on payment
+// Payment based karagena balance eka hadagannawa
 const calculateBalance = () => {
     const payAmount = parseFloat($("#pay").val()) || 0;
     const balance = payAmount - totalAmount;
     $("#balance").val(balance.toFixed(2));
 };
 
-// Reset cart
+// Cart eka reset kragannawa
 const resetCart = () => {
-    $("#orderTableBody").empty(); // Clear the table body
-    $("#total, #balance, #pay, #cust_tel, #cust_id, #cust_name, #itm_id, #itm_des, #ord_qty, #qty_on_hand, #itm_unit_price").val(''); // Reset totals and payments
+    $("#orderTableBody").empty();
+    $("#total, #balance, #pay, #cust_tel, #cust_id, #cust_name, #itm_id, #itm_des, #ord_qty, #qty_on_hand, #itm_unit_price").val('');
     totalAmount = 0;
     cartItems = {};
     initializeOrderFields();
@@ -206,10 +249,11 @@ const loadItemTable = () => {
 };
 
 
-
-// Place order
+// Order place karanawa
 function placeOrder() {
     console.log("Attempting to place order...");
+
+    const payAmount = parseFloat($("#pay").val()) || 0;
 
     if (totalAmount > 0) {
         const custId = $("#cust_id").val();
@@ -219,74 +263,90 @@ function placeOrder() {
             return;
         }
 
+        if (!validateAmount(payAmount)) {
+            return;
+        }
 
-        const items = Object.entries(cartItems).map(([itemId, details]) => ({
-            id: itemId,
-            qty: details.qty,
-            price: details.totalPrice / details.qty
-        }));
+        // Customer kenek innawada balanawa ayema
+        const customer = customer_db_array.find(c => c.cus_id === custId);
+        if (!customer) {
+            alert("Customer not found.");
+            return;
+        }
 
-        const order = new Order(currentOrderId, new CustomerModels(custId), items);
-
-
-        $("#orderDetailTableBody").empty();
-
-        // item data tika order detail ekata
-        for (const [itemId, itemDetails] of Object.entries(cartItems)) {
-            const qty = itemDetails.qty;
-            const totalPrice = itemDetails.totalPrice.toFixed(2);
-            order.addItem(itemId, qty, totalPrice);
-
-            const orderRow = `
-                <tr>
-                    <td>${currentOrderId}</td>
-                    <td>${custId}</td>
-                    <td>${itemId}</td>
-                    <td>${qty}</td>
-                    <td>${totalPrice}</td>
-                </tr>
-            `;
-            $("#orderDetailTableBody").append(orderRow);
-
-            // model eken qty eka gannawa hadala
-            const item = item_db_array.find(item => item.item_id === itemId);
-            if (item) {
-                item.deductQuantity(qty);
+        const items = Object.entries(cartItems).map(([itemId, details]) => {
+            // Item ekak thiyenawada balanawa ayema
+            const item = item_db_array.find(i => i.item_id === itemId);
+            if (!item) {
+                alert(`Item with ID ${itemId} not found.`);
+                return;
             }
 
+            // Quntity eka adu karagannawa item ekenma
+            item.deductQuantity(details.qty);
+
+            return {
+                itemId,
+                description: item.description,
+                qty: details.qty,
+                unitPrice: item.unit_price,
+                totalPrice: details.totalPrice
+            };
+        });
+
+        // order detail array ekata dagannawa
+        items.forEach(item => {
             orderDetails_array.push({
                 orderId: currentOrderId,
                 customerId: custId,
-                itemId: itemId,
-                quantity: qty,
-                totalPrice: totalPrice
+                itemId: item.itemId,
+                quantity: item.qty,
+                totalPrice: item.totalPrice.toFixed(2)
             });
-        }
+        });
 
-        // update item_db_array
-        saveItemsToLocalStorage(order.items);
+        localStorage.setItem("orderDetails", JSON.stringify(orderDetails_array));
+        saveItemsToLocalStorage(item_db_array);
 
-        // Save order details to localStorage
-        localStorage.setItem("orderDetails", JSON.stringify(order));
-        localStorage.setItem("orderDetailData", JSON.stringify(orderDetails_array));
-        loadItemTable(); // Refresh the item table
+        loadItemTable();
+        loadOrderDetail();
 
-        // Generate a new order ID and update currentOrderId
         currentOrderId = generateOrderId();
         localStorage.setItem("currentOrderId", currentOrderId);
 
         Swal.fire({
             title: 'Success!',
-            text: 'Order Placed successfully!',
+            text: 'Order placed successfully!',
             icon: 'success',
             confirmButtonText: 'OK'
         });
-        resetCart(); // Reset the cart
+
+        resetCart();
     } else {
         alert("No items in the cart.");
     }
 }
 
+
+function loadOrderDetail(){
+    $("#orderDetailTableBody").empty();
+
+    orderDetails_array.forEach(orderDetail => {
+        const { orderId, customerId, itemId, quantity, totalPrice } = orderDetail;
+
+        const orderRow = `
+            <tr>
+                <td>${orderId}</td>
+                <td>${customerId}</td>
+                <td>${itemId}</td>
+                <td>${quantity}</td>
+                <td>${totalPrice}</td>
+            </tr>
+        `;
+
+        $("#orderDetailTableBody").append(orderRow);
+    });
+}
 
 function saveItemsToLocalStorage(items) {
     localStorage.setItem('orderItems', JSON.stringify(items));
@@ -299,7 +359,7 @@ $(document).ready(() => {
     loadCartFromLocalStorage();
     initializeOrderFields();
     loadItemTable();
-
+loadOrderDetail();
 
     $("#cust_tel").on("keydown", function (event) {
         if (event.key === "Enter") {
@@ -319,4 +379,3 @@ $(document).ready(() => {
     $("#pay").on("input", calculateBalance);
     $("#resetCartBtn").on("click",resetCart);
 });
-

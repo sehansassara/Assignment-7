@@ -51,30 +51,45 @@
 
 
 <!--Home-->
-<section class="home" id="home-section">
-    <div class="card-container" style="display: flex; justify-content: center; align-items: center; gap: 20px; height: 90vh;">
-        <div class="card text-center mb-3 card-style">
+<!--Home-->
+<section class="home" id="home-section" style="padding: 20px;">
+    <!-- Cards Section -->
+    <div class="card-container" style="display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap;">
+        <div class="card text-center mb-3 card-style" style="width: 250px; border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
             <div class="card-body">
-                <img class="img" src="assets/image/icons8-customerjj-96%20(1).png"><br>
-                <div class="text1" id="customerCount">Customer <span>0</span></div>
+                <img class="img" src="assets/image/icons8-customerjj-96%20(1).png" alt="Customer Icon" style="width: 80px; height: auto;"><br>
+                <div class="text1" id="customerCount" style="font-size: 18px; margin-top: 10px;">Customer <span>0</span></div>
             </div>
         </div>
 
-        <div class="card text-center mb-3 card-style" >
+        <div class="card text-center mb-3 card-style" style="width: 250px; border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
             <div class="card-body">
-                <img class="img" src="assets/image/icons8-batch-96.png"><br>
-                <div class="text2" id="itemCount">Item <span>0</span></div>
+                <img class="img" src="assets/image/icons8-batch-96.png" alt="Item Icon" style="width: 80px; height: auto;"><br>
+                <div class="text2" id="itemCount" style="font-size: 18px; margin-top: 10px;">Item <span>0</span></div>
             </div>
         </div>
 
-        <div class="card text-center mb-3 card-style">
+        <div class="card text-center mb-3 card-style" style="width: 250px; border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px;">
             <div class="card-body">
-                <img class="img" src="assets/image/icons8-order-96.png"><br>
-                <div class="text3" id="orderCount">Order <span>0</span></div>
+                <img class="img" src="assets/image/icons8-order-96.png" alt="Order Icon" style="width: 80px; height: auto;"><br>
+                <div class="text3" id="orderCount" style="font-size: 18px; margin-top: 10px;">Order <span>0</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pie Chart Section -->
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <div class="card text-center" style="border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 8px; padding: 20px;">
+                <div class="card-body">
+                    <h5 class="card-title" style="font-size: 20px; margin-bottom: 20px;">Overview</h5>
+                    <canvas id="overviewPieChart" style="max-width: 100%; height: 300px;"></canvas>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
 
 <!--Customer-->
 <section id="customer-section">
@@ -371,7 +386,6 @@
                     </div>
                     <section class="sec-bt mt-10 ">
                         <button id="placeOrder-btn" type="button" class="btn btn-outline-warning btn-f">Place Order</button>
-                        <button id="view-btn" type="button" class="btn btn-outline-info btn-f">View</button>
                     </section>
                 </form>
             </div>
@@ -449,6 +463,7 @@
 <script type="module" src="controller/ItemController.js"></script>
 <script type="module" src="controller/OrderController.js"></script>
 <script type="module" src="controller/HomeController.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="module" src="jScript.js"></script>
 <script src="assets/fontawesome/js/all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

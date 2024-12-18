@@ -2,6 +2,11 @@ import ItemModel from "../models/ItemModel.js";
 import {item_db_array} from "../db/database.js"
 
 
+const descriptionRegex = /^[A-Za-z0-9\s,.'-]+$/;
+const qtyRegex = /^[1-9][0-9]*$/;
+const unitPriceRegex = /^\d+(\.\d{1,2})?$/;
+
+
 let item_selected_index = null;
 
 
@@ -99,7 +104,7 @@ $(document).ready(function () {
         generateItemId();
     });
 
-
+    //Save item
     $("#item_save_btn").on("click", function () {
         let item_id = $("#item_ID").val();
         let description = $("#description").val();
@@ -113,23 +118,23 @@ $(document).ready(function () {
                 title: "Invalid Input",
                 text: "Invalid Item ID",
             });
-        } else if(description.length===0) {
+        } else if (!descriptionRegex.test(description)) {
             Swal.fire({
                 icon: "error",
                 title: "Invalid Input",
-                text: "Invalid Item Description",
+                text: "Invalid Item Description. It should contain only letters, numbers, and some special characters.",
             });
-        } else if(qty.length===0) {
+        } else if (!qtyRegex.test(qty)) {
             Swal.fire({
                 icon: "error",
                 title: "Invalid Input",
-                text: "Invalid Quantity",
+                text: "Invalid Quantity. Please enter a positive number.",
             });
-        } else if(unit_price.length===0) {
+        } else if (!unitPriceRegex.test(unit_price)) {
             Swal.fire({
                 icon: "error",
                 title: "Invalid Input",
-                text: "Invalid Unit Price",
+                text: "Invalid Unit Price. Please enter a valid number, with up to two decimal places.",
             });
         } else {
             let newItem = new ItemModel(item_id, description, qty, unit_price);
@@ -139,14 +144,15 @@ $(document).ready(function () {
             loadItemTable();
             clearFields();
 
+            Swal.fire({
+                title: 'Success!',
+                text: 'Item has been added successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+            generateItemId();
         }
-        Swal.fire({
-            title: 'Success!',
-            text: 'Item has been added successfully!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        });
-        generateItemId();
+
     });
 
 
@@ -227,23 +233,23 @@ $(document).ready(function () {
                 title: "Invalid Input",
                 text: "Invalid Item ID",
             });
-        } else if(description.length===0) {
+        } else if (!descriptionRegex.test(description)) {
             Swal.fire({
                 icon: "error",
                 title: "Invalid Input",
-                text: "Invalid Item Description",
+                text: "Invalid Item Description. It should contain only letters, numbers, and some special characters.",
             });
-        } else if(qty.length===0) {
+        } else if (!qtyRegex.test(qty)) {
             Swal.fire({
                 icon: "error",
                 title: "Invalid Input",
-                text: "Invalid Quantity",
+                text: "Invalid Quantity. Please enter a positive number.",
             });
-        } else if(unit_price.length===0) {
+        } else if (!unitPriceRegex.test(unit_price)) {
             Swal.fire({
                 icon: "error",
                 title: "Invalid Input",
-                text: "Invalid Unit Price",
+                text: "Invalid Unit Price. Please enter a valid number, with up to two decimal places.",
             });
         } else {
             let newItem = new ItemModel(item_id, description, qty, unit_price);
@@ -252,15 +258,17 @@ $(document).ready(function () {
             saveItemsToLocalStorage();
             loadItemTable();
             clearFields();
-        }
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Item has been updated",
-            showConfirmButton: false,
-            timer: 1500
-        });
 
-        generateItemId();
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Item has been updated",
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            generateItemId();
+        }
+
     });
 

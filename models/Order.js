@@ -1,26 +1,26 @@
 export default class Order {
     constructor(orderID, customer, items) {
         this._orderID = orderID;
-        this._customerID = customer._custId; // Assuming _custId is the ID in the Customer object
-        this._items = items; // Store items in an array
-        this._date = new Date(); // Set current date
+        this._customerID = customer._custId;
+        this._items = items;
+        this._date = new Date();
         this._total = this.calculateTotal();
-        this._customer = customer; // Calculate total from items
+        this._customer = customer;
     }
 
     addItem(itemId, quantity, totalPrice) {
         const item = {
             itemId,
             quantity,
-            price: totalPrice, // You might want to change this based on how you want to store item prices
+            price: totalPrice,
         };
         this._items.push(item); // Add item to the items array
-        this._total = this.calculateTotal(); // Update total after adding item
+        this._total = this.calculateTotal();
     }
 
     calculateTotal() {
         return this._items.reduce((accumulator, item) => {
-            return accumulator + parseFloat(item.price); // Ensure the price is a float
+            return accumulator + parseFloat(item.price);
         }, 0);
     }
 

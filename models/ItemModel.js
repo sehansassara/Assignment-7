@@ -40,6 +40,6 @@ export default class ItemModel{
     }
 
     deductQuantity(amount) {
-        this.qty = Math.max(0, this.qty - amount); // Ensure quantity doesn't go negative
+        this.qty = Math.max(0, this.qty - amount);
     }
 }

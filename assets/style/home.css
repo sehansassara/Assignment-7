@@ -40,3 +40,12 @@ body {
 .card{
     width: 300px;
 }
+
+.card-container {
+    flex-wrap: wrap;
+}
+
+#overviewPieChart {
+    height: 300px;
+    max-width: 100%;
+}

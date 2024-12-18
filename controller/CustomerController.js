@@ -8,11 +8,19 @@ const validateMobile = (cus_tel) => {
 }
 
 
+const validateCustomerName = (cus_name) => {
+    const nameRegex = /^[a-zA-Z\s]+$/;
+    return nameRegex.test(cus_name) && cus_name.trim().length > 0;
+}
+
+
+const validateAddress = (cus_address) => {
+    return cus_address.trim().length > 0;
+}
+
 let customer_selected_index= null;
 
 
-
-// Search customer
 $("#search_button").on("click", function () {
     const searchTerm = $("#search").val().toLowerCase().trim();
     const filteredCustomers = customer_db_array.filter((customer) =>
@@ -109,25 +117,25 @@ $("#customer_add_btn").on("click", function () {
     let cus_tel = $("#cus_tel").val();
 
 
-    if(cus_id.length===0) {
+    if (cus_id.length === 0) {
         Swal.fire({
             icon: "error",
             title: "Invalid Input",
             text: "Invalid Customer ID",
         });
-    } else if(cus_name.length===0) {
+    } else if (!validateCustomerName(cus_name)) {
         Swal.fire({
             icon: "error",
             title: "Invalid Input",
             text: "Invalid Customer Name",
         });
-    } else if(cus_address.length===0) {
+    } else if (!validateAddress(cus_address)) {
         Swal.fire({
             icon: "error",
             title: "Invalid Input",
             text: "Invalid Customer Address",
         });
-    } else if(!validateMobile(cus_tel)) {
+    } else if (!validateMobile(cus_tel)) {
         Swal.fire({
             icon: "error",
             title: "Invalid Input",
@@ -140,16 +148,18 @@ $("#customer_add_btn").on("click", function () {
         saveCustomersToLocalStorage();
         loadCustomerTable();
         clearCustomerFields();
+
+        Swal.fire({
+            title: 'Success!',
+            text: 'Customer has been added successfully!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+
+        generateCustomerId();
     }
 
-    Swal.fire({
-        title: 'Success!',
-        text: 'Customer has been added successfully!',
-        icon: 'success',
-        confirmButtonText: 'OK'
-    });
 
-    generateCustomerId();
 
 
 });
@@ -225,13 +235,13 @@ $("#customer_update_btn").on("click", function () {
             title: "Invalid Input",
             text: "Invalid Customer ID",
         });
-    } else if (cus_name.length === 0) {
+    } else if (!validateCustomerName(cus_name)) {
         Swal.fire({
             icon: "error",
             title: "Invalid Input",
             text: "Invalid Customer Name",
         });
-    } else if (cus_address.length === 0) {
+    } else if (!validateAddress(cus_address)) {
         Swal.fire({
             icon: "error",
             title: "Invalid Input",
@@ -250,15 +260,17 @@ $("#customer_update_btn").on("click", function () {
         saveCustomersToLocalStorage();
         loadCustomerTable();
         clearCustomerFields();
+
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Customer has been updated",
+            showConfirmButton: false,
+            timer: 1500
+        });
+        generateCustomerId();
     }
 
-    Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Customer has been updated",
-        showConfirmButton: false,
-        timer: 1500
-    });
-    generateCustomerId();
+
 });
 
